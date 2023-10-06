@@ -1,0 +1,24 @@
+service: sls-express-ts
+frameworkVersion: '3'
+
+# 도커가 느려서 timeout 값 충분히 늘려주지 않으면 timeout 난다 .... 
+provider:
+  name: aws
+  runtime: nodejs18.x
+  timeout: 30
+
+functions:
+  api:
+    handler: dist/handler.handler
+    events:
+      - httpApi: '*'
+
+# additional serverless offline parametar
+plugins: 
+    - serverless-offline
+custom:
+    serverless-offline:
+        #httpsProtocol: "dev-certs"
+        httpPort: 80
+        stageVariables:
+        foo: "bar"
