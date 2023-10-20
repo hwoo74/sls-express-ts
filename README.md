@@ -1,6 +1,7 @@
 ### 정리.
 
 serverless + typescript + express + yarn + docker + serverless-offline 을 ... ESM(ECMA Script Module) 모듈 방식으로 돌리기.
+serverless-plugin-typescript 도 추가함 ... (실행시 ts를 지정할것...)
 
 1. 설치.
   - sls 명령어로 실행.
@@ -165,3 +166,24 @@ serverless + typescript + express + yarn + docker + serverless-offline 을 ... E
 
     export { handler };
     ```
+
+3. serverless-plugin-typescript 로 ESM 모듈 추가 ...
+  - yarn add --dev serverless-plugin-typescript
+  - serverless.yml 에 plugin 추가.
+    ```serverless.yml
+    plugins:
+        # offline 플러그인보다 반드시 앞에 나와야 한다...
+        - serverless-plugin-typescript
+        - serverless-offline
+    ```
+  - 그닥 별거 없이 바로 돌아감 ... 
+  - serverless.yml 에서 수정 필요...
+    - handler.ts 를 직접 호출하며, 자동으로 .build 디렉토리안에 빌드한다. 
+      ```
+      ... 위에는 동일하고 ...
+      handler: src/handler.handler
+      ```
+  - 결과물은 항상 .build 디렉토리에 생성된다.
+    - tsconfig.json 에서의 outDir 과 rootDir 값은 동작하지 않음... 
+    - https://github.com/serverless/serverless-plugin-typescript#tsconfigjson
+    - .gitignore 에 .build 도 추가해 둘것 ... 

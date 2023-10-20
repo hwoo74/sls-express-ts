@@ -1,0 +1,83 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "prettier",
+    "import", // eslint-plugin-import
+    "sonarjs", // eslint-plugin-sonarjs
+    "unicorn",
+    "promise", // eslint-plugin-promise
+    "security" // eslint-plugin-security ... 맞나? 이런 얘기는 공식 페이지에 없긴 함 ... 룰이 이렇긴 한데 ...
+  ],
+  "extends": [
+    //"standard-with-typescript",
+    "plugin:@typescript-eslint/recommended",
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "prettier",
+    "plugin:import/typescript",
+    "plugin:import/recommended", // eslint-plugin-import
+    // alternatively, 'recommended' is the combination of these two rule sets:
+    //"plugin:import/errors", // eslint-plugin-import
+    //"plugin:import/warnings", // eslint-plugin-import
+    "plugin:sonarjs/recommended", // eslint-plugin-sonarjs
+    "plugin:unicorn/recommended",
+    "plugin:promise/recommended",  // eslint-plugin-promise
+    "plugin:security/recommended" // eslint-plugin-security
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "ignorePatterns": [
+    ".eslintrc.js"
+  ],
+  "rules": {
+    "@typescript-eslint/consistent-type-imports": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "semi": true,
+        "useTabs": false,
+        "tabWidth": 2,
+        "printWidth": 80,
+        "bracketSpacing": true,
+        "arrowParens": "avoid",
+        "trailingComma": "all",
+        "endOfLine": "auto",
+        "parser": "typescript"
+      }
+    ],
+    /*
+    "import/no-unresolved": 2,
+    "import/no-unused-modules":"error", // test
+    "import/extensions":"error", // test
+    "import/named": 2,
+    "import/namespace": 2,
+    "import/default": 2,
+    "import/export": 2,
+    */
+    "sonarjs/no-all-duplicated-branches": "off"   // eslint-plugin-sonarjs, prettier 와 충돌방지.
+  },
+  "env": {
+    "node": true
+  },
+  "overrides": [
+    {
+      "extends": ["plugin:@typescript-eslint/disable-type-checked"],
+      "files": ["./**/*.js"]
+    }
+  ],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true, // always try to resolve types under `<root>@types` directory even it doesn't contain any source code, like `@types/unist`
+        "project": "./tsconfig.json"
+      }
+    }
+  }
+}

@@ -9,16 +9,29 @@ provider:
 
 functions:
   api:
-    handler: dist/handler.handler
+    # build 해서 dist/ 에서 돌릴때... 
+    # handler: dist/handler.handler
+    # serverless-plugin-typescript 로 돌릴때 ... 
+    handler: src/handler.handler
     events:
       - httpApi: '*'
 
 # additional serverless offline parametar
 plugins: 
-    - serverless-offline
+  # 순서조심. serverless-plugin-typescript 가 serverless-offline 보다 앞이어야 한다.
+  - serverless-dotenv-plugin
+  - serverless-plugin-typescript
+  - serverless-offline
+
 custom:
-    serverless-offline:
-        #httpsProtocol: "dev-certs"
-        httpPort: 80
-        stageVariables:
-        foo: "bar"
+  #dotenv:
+  #  path: .env.${commandLineOptions.stage}
+  serverless-offline:
+    #httpsProtocol: "dev-certs"
+    httpPort: 80
+    stageVariables:
+    foo: "bar"
+  dotenv: .env.${opt:stage}
+  #dotenv:
+    #path: .env.${commandLineOptions.stage}
+  #dotenv: ${commandLineOptions.stage} && '.env.${commandLineOptions.stage}'
