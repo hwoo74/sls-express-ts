@@ -42,10 +42,5 @@
     "start-node": "tsc && env-cmd -f .env.dev node ./dist/run.js",
     "start-build-sls": "tsc && sls offline --host 0.0.0.0 --disableCookieValidation --stage dev",
     "start-sls": "sls offline --host 0.0.0.0 --disableCookieValidation --stage dev"
-  },
-  "husky": {
-    "hooks": {
-        "pre-commit": "npx eslint --cache ."
-    }
   }
 }
